@@ -37,7 +37,7 @@
             android:title="@string/qs_tile_title_visibility_title"
             android:summary="@string/qs_tile_title_visibility_summary"
             android:defaultValue="true" />
-            
+
         <com.malluos.settings.preferences.SystemSettingSeekBarPreference
             android:key="qs_columns_portrait"
             android:icon="@drawable/ic_qs_tile"
@@ -73,5 +73,12 @@
             android:max="3"
             settings:min="1"
             settings:units="" />
+
+        <!-- QS blur -->
+        <com.malluos.settings.preferences.SystemSettingSwitchPreference
+            android:key="qs_background_blur"
+            android:icon="@drawable/ic_blur"
+            android:title="@string/qs_blur_title"
+            android:summary="@string/qs_blur_summary" />
 
 </PreferenceScreen>

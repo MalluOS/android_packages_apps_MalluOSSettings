@@ -202,4 +202,8 @@
     <string name="qs_columns_portrait_title">Columns (portrait)</string>
     <string name="qs_columns_landscape_title">Columns (landscape)</string>
 
+    <!-- QS blur -->
+    <string name="qs_blur_title">Background blur</string>
+    <string name="qs_blur_summary">Blur empty space in notification panel below quick settings</string>
+
 </resources>
