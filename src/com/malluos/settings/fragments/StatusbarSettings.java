@@ -30,6 +30,7 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.malluos.support.colorpicker.ColorPickerPreference;
 
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto;
@@ -39,13 +40,50 @@ import com.malluos.settings.R;
 public class StatusbarSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
+     private static final String MALLUOS_LOGO_COLOR = "status_bar_logo_color";
+     private ColorPickerPreference mMalluOSLogoColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.malluos_settings_statusbar);
         ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+        final ContentResolver resolver = getActivity().getContentResolver();
+
+
+          mMalluOSLogoColor =
+                  (ColorPickerPreference) findPreference(MalluOS_LOGO_COLOR);
+          int intColor = Settings.System.getIntForUser(resolver,
+                  Settings.System.STATUS_BAR_LOGO_COLOR, 0xFFFFFFFF,
+                  UserHandle.USER_CURRENT);
+          String hexColor = ColorPickerPreference.convertToARGB(intColor);
+          mMalluOSLogoColor.setNewPreviewColor(intColor);
+          if (intColor != 0xFFFFFFFF) {
+              mMalluOSLogoColor.setSummary(hexColor);
+          } else {
+              mMalluOSLogoColor.setSummary(R.string.default_string);
+          }
+          mMalluOSLogoColor.setOnPreferenceChangeListener(this);
+
+          public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+    ContentResolver resolver = getActivity().getContentResolver();
+    if (preference == mMalluOSLogoColor) {
+        String hex = ColorPickerPreference.convertToARGB(
+            Integer.parseInt(String.valueOf(newValue)));
+        int value = ColorPickerPreference.convertToColorInt(hex);
+        Settings.System.putIntForUser(resolver,
+            Settings.System.STATUS_BAR_LOGO_COLOR, value,
+            UserHandle.USER_CURRENT);
+        if (value != 0xFFFFFFFF) {
+            mMalluOSLogoColor.setSummary(hex);
+        } else {
+            mMalluOSLogoColor.setSummary(R.string.default_string);
+        }
+        return true;
     }
+  }
 
     @Override
     public int getMetricsCategory() {
