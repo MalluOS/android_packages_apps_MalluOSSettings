@@ -1,0 +1,7 @@
+filegroup {
+    name: "MalluOSSettingsApp",
+    srcs: [
+        "src/**/*.java",
+    ],
+	path: "src",
+}
